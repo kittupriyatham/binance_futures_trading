@@ -1,0 +1,25 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.env
+logs/*.log
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+dist/
+build/
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local setup binaries
+*.exe
+
+# Conversation log transcripts
+chat_text.txt
+extracted_conversation.txt
+

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Binance Futures Testnet Trading Terminal. Manage and execute market, limit, and stop-limit orders with live validation and connection health status.">
+    <title>Binance Futures Trading Terminal</title>
+    <!-- Google Fonts for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css?v=1.2">
+</head>
+
+
+<body class="dark-theme">
+    <header class="main-header">
+        <div class="logo-container">
+            <svg class="binance-logo" viewBox="0 0 24 24" width="24" height="24">
+                <path fill="currentColor" d="M12.004 0L6.792 5.212l1.982 1.983L12.004 3.96l3.23 3.235 1.982-1.983L12.004 0zm5.212 5.212l-1.982 1.983 3.23 3.236 1.983-1.983-3.231-3.236zm-10.424 0L1.56 8.448l1.983 1.983 3.23-3.236-1.982-1.983zM12.004 7.92L8.774 11.15l1.982 1.983 1.248-1.248 1.248 1.248 1.982-1.983-3.23-3.23zm8.448 3.759l-1.983 1.983 1.983 1.982 1.982-1.982-1.982-1.983zm-16.896 0L1.56 13.662l1.983 1.982 1.982-1.982-1.983-1.983zM12.004 15.84l-3.23-3.23-1.982 1.982 5.212 5.213 5.212-5.213-1.982-1.982-3.23 3.23zM6.792 18.788l1.982 1.983 3.23-3.236-1.982-1.983-3.23 3.236zm10.424 0l-3.23-3.236-1.982 1.983 3.23 3.236 1.982-1.983z"/>
+            </svg>
+            <span class="logo-text">PrimeTrade</span>
+        </div>
+        <div class="header-right">
+            <button id="wallet-modal-btn" class="header-btn" aria-label="Open Wallet">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;">
+                    <rect x="2" y="4" width="20" height="16" rx="2"/>
+                    <path d="M12 4v16M2 10h20"/>
+                </svg>
+                <span>Wallet</span>
+            </button>
+            <div id="health-status" class="health-badge checking">
+                <span class="pulse-dot"></span>
+                <span class="status-label">Checking Connection...</span>
+            </div>
+            <button id="theme-toggle" class="theme-btn" aria-label="Toggle visual theme">
+                <svg class="sun-icon" viewBox="0 0 24 24" width="18" height="18">
+                    <circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <svg class="moon-icon" viewBox="0 0 24 24" width="18" height="18">
+                    <path fill="currentColor" d="M12.3 22h-.1c-5.5 0-10-4.5-10-10C2.2 6.8 6.3 2.5 11.5 2c.3 0 .6.2.7.5.1.3 0 .6-.2.8-2.4 2.4-2.4 6.4 0 8.8.2.2.3.5.2.8-.1.3-.4.5-.7.5-2.2 0-4.2-1.3-5.1-3.2C5.5 10.6 5 12 5 13.5c0 3.6 2.9 6.5 6.5 6.5 2.1 0 4-1 5.2-2.7.2-.3.5-.4.8-.3.3.1.5.4.5.7C17.5 19.8 15.1 22 12.3 22z"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="dashboard-container">
+        <h1 class="visually-hidden">Binance Futures Trading Dashboard</h1>
+        
+        <!-- Top Horizontal Stats Banner -->
+        <section class="horizontal-stats-banner">
+            <div class="stat-item">
+                <span class="stat-label">Holding Value ($)</span>
+                <span id="wallet-position-value" class="stat-value">$0.00</span>
+            </div>
+            <div class="stat-item highlight-stat">
+                <span class="stat-label">Total Net Worth</span>
+                <span id="wallet-total-value" class="stat-value">$10,000.00</span>
+            </div>
+        </section>
+        
+        <div class="grid-layout">
+            <!-- Left Side: Order placement form -->
+            <section class="card order-card">
+                <div class="card-header">
+                    <h2>Place New Order</h2>
+                </div>
+                
+                <form id="order-form" autocomplete="off">
+                    <div class="form-group">
+                        <div class="label-row">
+                            <label for="symbol">Symbol</label>
+                            <span id="symbol-price-ticker" class="ticker-badge">Live: $--.--</span>
+                        </div>
+                        <input type="text" id="symbol" name="symbol" value="BTCUSDT" placeholder="e.g. BTCUSDT" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Side</label>
+                        <div class="side-selector">
+                            <input type="radio" id="side-buy" name="side" value="BUY" checked>
+                            <label for="side-buy" class="side-btn buy-btn">BUY</label>
+                            
+                            <input type="radio" id="side-sell" name="side" value="SELL">
+                            <label for="side-sell" class="side-btn sell-btn">SELL</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="order_type">Order Type</label>
+                        <select id="order_type" name="order_type" required>
+                            <option value="MARKET">MARKET</option>
+                            <option value="LIMIT">LIMIT</option>
+                            <option value="STOP_LIMIT">STOP LIMIT</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quantity">Quantity</label>
+                        <input type="number" id="quantity" name="quantity" step="any" min="0.000001" placeholder="0.000" required>
+                    </div>
+
+                    <div class="form-group conditional-input" id="price-group">
+                        <label for="price">Limit Price ($)</label>
+                        <input type="number" id="price" name="price" step="any" min="0.000001" placeholder="0.00">
+                    </div>
+
+                    <div class="form-group conditional-input" id="stop-price-group">
+                        <label for="stop_price">Stop Trigger Price ($)</label>
+                        <input type="number" id="stop_price" name="stop_price" step="any" min="0.000001" placeholder="0.00">
+                    </div>
+
+                    <button type="submit" id="submit-order-btn" class="submit-btn">Place BUY Order</button>
+                </form>
+            </section>
+
+            <!-- Right Side: Order history and messages -->
+            <div class="right-column">
+                <section class="card status-card">
+
+                    <div class="card-header">
+                        <h2>Terminal Messages</h2>
+                    </div>
+
+                    <div id="terminal-console" class="terminal-box">
+                        <div class="terminal-line system">System initialized. Waiting for actions...</div>
+                    </div>
+                </section>
+
+                <section class="card log-card">
+                    <div class="card-header">
+                        <h2>Order Log (This Session)</h2>
+                    </div>
+                    <div class="table-container">
+                        <table id="orders-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Symbol</th>
+                                    <th>Side</th>
+                                    <th>Type</th>
+                                    <th>Qty</th>
+                                    <th>Price</th>
+                                    <th>Stop Price</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="empty-row">
+                                    <td colspan="8">No orders placed in this session.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Wallet Modal -->
+    <div id="wallet-modal" class="modal-overlay">
+        <div class="modal-content card">
+            <div class="card-header">
+                <h2>Virtual Wallet</h2>
+                <button id="close-wallet-btn" class="close-btn" aria-label="Close Wallet">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="wallet-toggle-row">
+                    <span class="toggle-text">Sandbox Mode (Mock Binance)</span>
+                    <label class="switch" for="mock-mode-checkbox">
+                        <input type="checkbox" id="mock-mode-checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="wallet-metrics-modal">
+                    <div class="metric-box">
+                        <span class="metric-label">USD Balance</span>
+                        <span id="wallet-balance" class="metric-value">$0.00</span>
+                    </div>
+                    <div class="metric-box">
+                        <span class="metric-label">Position Qty</span>
+                        <span id="wallet-position" class="metric-value">0.000 contracts</span>
+                    </div>
+                </div>
+                <div class="wallet-actions-modal">
+                    <label for="load-amount-input">Load Virtual Funds ($)</label>
+                    <div class="action-row">
+                        <input type="number" id="load-amount-input" placeholder="Amount..." value="10000" min="1">
+                        <button id="load-funds-btn" class="secondary-btn">Load</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/app.js?v=1.3"></script>
+</body>
+</html>

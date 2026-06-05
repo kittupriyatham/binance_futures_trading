@@ -113,11 +113,15 @@ python cli.py stop-limit --symbol BTCUSDT --side BUY --quantity 0.02 --price 692
 
 ---
 
-## 📸 Interface Screenshot
+## 📸 Interface Screenshots
 
 Here is the current updated view of the PrimeTrade Web UI Terminal:
 
 ![PrimeTrade Web UI](prime.png)
+
+Here is the view of the new Virtual Wallet modal interface:
+
+![PrimeTrade Virtual Wallet Modal](primewallet.png)
 
 ---
 

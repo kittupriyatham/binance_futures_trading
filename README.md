@@ -113,6 +113,14 @@ python cli.py stop-limit --symbol BTCUSDT --side BUY --quantity 0.02 --price 692
 
 ---
 
+## 📸 Interface Screenshot
+
+Here is the current updated view of the PrimeTrade Web UI Terminal:
+
+![PrimeTrade Web UI](prime.png)
+
+---
+
 ## 📝 Logging Strategy
 
 All orders placed through either the CLI or Web UI go through the centralized logger. Logs are saved in the `logs/` directory.
